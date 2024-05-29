@@ -1,0 +1,11 @@
+<div class="col-md-6">
+  <div class="my-3">
+    <%= link_to 'Bookmarks', bookmarks_path, class:'fw-semibold text-black text-decoration-none fs-4' %>
+  </div>
+  <%= turbo_frame_tag "tweets" do %>
+    <%= render partial:'tweets/tweet', collection: @tweet_presenters, as: :tweet_presenter %>
+  <% end %>
+</div>
+<div class="col">
+  <%= render 'shared/hashtag_sidebar' %>
+</div>

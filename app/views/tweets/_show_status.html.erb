@@ -1,0 +1,44 @@
+<%= turbo_frame_tag "tweet_status" do %>
+  <div class="d-flex justify-content-start">
+    <span class="me-4"><span class="fw-bold">
+        <%= tweet_presenter.views_count %>
+      </span> Views</span>
+    <span class="me-4"><span class="fw-bold">
+        <%= tweet_presenter.reply_tweets_count %>
+      </span> replies</span>
+    <span class="me-4"><span class="fw-bold">
+        <%= tweet_presenter.retweets_count %>
+      </span> Retweets</span>
+    <span><span class="fw-bold">
+        <%= tweet_presenter.likes_count %>
+      </span> Likes</span>
+  </div>
+  <div class="d-flex justify-content-evenly mt-3">
+    <%= link_to '#', type:'button', class:'text-decoration-none views d-inline-flex align-items-center' do %>
+      <span class="bg-icon-blue rounded-circle p-2 d-inline-flex fs-5">
+        <i class="fa-solid fa-chart-simple"></i>
+      </span>
+    <% end %>
+    <%= link_to tweet_path(tweet_presenter.tweet), type:'button', class:'text-decoration-none replies d-inline-flex align-items-center' do %>
+      <span class="bg-icon-blue rounded-circle p-2 d-inline-flex fs-5">
+        <i class="fa-regular fa-comment-dots"></i>
+      </span>
+    <% end %>
+    <%= link_to tweet_presenter.tweet_retweet_url(source: "tweet_show"), data:{ 'turbo-method':tweet_presenter.turbo_data_retweet_method }, class:"text-decoration-none
+      retweets d-inline-flex align-items-center #{tweet_presenter.tweet_retweeted_by_current_user ? 'text-green' : '' }" do %>
+      <span class="bg-icon-green rounded-circle p-2  d-inline-flex fs-5">
+        <i class="fa-solid fa-retweet"></i>
+      </span>
+    <% end %>
+    <%= link_to tweet_presenter.tweet_like_url(source: "tweet_show"), data:{ 'turbo-method':tweet_presenter.turbo_data_like_method },class: "text-decoration-none likes d-inline-flex align-items-center #{tweet_presenter.tweet_liked_by_current_user ? ' text-pink' : '' }" do %>
+      <span class="bg-icon-red rounded-circle p-2  d-inline-flex fs-5">
+        <i class="<%= tweet_presenter.like_heart_icon %>"></i>
+      </span>
+    <% end %>
+    <%= link_to tweet_presenter.tweet_bookmark_url(source: "tweet_show"), type:'button',data:{'turbo-method':tweet_presenter.turbo_data_bookmark_method }, class:"text-decoration-none bookmark d-inline-flex align-items-center #{tweet_presenter.tweet_bookmarked_by_current_user ? 'text-primary' : '' }" do %>
+      <span class="bg-icon-blue rounded-circle p-2 d-inline-flex fs-5">
+        <i class="<%= tweet_presenter.bookmark_icon %>"></i>
+      </span>
+    <% end %>
+  </div>
+<% end %>

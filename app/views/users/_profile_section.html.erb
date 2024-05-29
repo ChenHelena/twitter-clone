@@ -1,0 +1,89 @@
+<%= turbo_frame_tag "profile-section" do %>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <% if @user.avatar.present? %>
+        <%= avatar(@user, size: { x: 150, y: 150 }) %>
+      <% else %>
+        <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '150x150' , alt: 'Default' %>
+      <% end %>
+    </div>
+    <% if controller_name == 'profile' %>
+      <%= button_tag "Edit Profile" , data: { "bs-toggle"=> "modal","bs-target" => "#profileEditModal" }, class:'btn
+        btn-outline-primary mx-3 my-2' %>
+    <% else %>
+      <div class="d-grid gap-2 d-md-block">
+        <%= link_to message_threads_path(user_id: @user.id), class: 'btn btn-outline-secondary rounded-circle',data: { turbo: false } do %>
+          <i class="fa-regular fa-envelope"></i>
+        <% end %>
+        <%= render "users/follow_button", user: @user, current_user: current_user %>
+      </div>
+    <% end %>
+      
+  </div>
+  <div>
+    <p class="mb-0 fs-4 fw-bold"><%= user.name %></p>
+    <p class="text-black-50">@<%= user.username %></p>
+  </div>
+  <p class="mb-3"><%= user.bio %></p>
+  <div class="d-flex">
+    <% if user.location.present? %>
+      <p class="text-black-50 me-4"><i class="fa-solid fa-location-dot"></i> <span class="ms-1"><%= user.location %></span></p>
+    <% end%>
+    <% if user.website.present? %>
+      <p class="text-black-50 me-4"><i class="fa-solid fa-link"></i> <span class="ms-1"><%= link_to user.website, user.website, target: :_blank %></span></p>
+    <% end %>
+    <p class="text-black-50"><i class="fa-regular fa-calendar"></i> <span class="ms-1">Joined <%= user.created_at.strftime("%B %Y") %></span></p>
+  </div>
+  <div class="d-flex">
+    <span class="text-black-50 me-4"><span class="text-black fw-bold"><%= user.following_count %></span> Following</span>
+    <span class="text-black-50"><span class="text-black fw-bold"><%= user.follower_count %></span> Followers</span>
+  </div>
+<% end %>
+
+<% if controller_name == 'profile' %>
+<!-- Tweet show Modal -->
+  <div class="modal" id="profileEditModal" tabindex="-1" aria-labelledby="profileEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <button type="button" class="btn-close btn-modal mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= form_with model: current_user,url: profile_path, data: { controller: 'tweet' }, method: :put do |f| %>
+            <div class="mb-3">
+              <%= cover_image(current_user, size: { x: 150, y: 150 }) %>
+              <%= f.file_field :avatar, class:'form-control my-3' %>
+            </div>
+            <div class="form-floating mb-3">
+              <%= f.text_field :name, class: 'form-control' , id: 'floatingInput' , placeholder: 'name@example.com' %>
+                <%= f.label :name, class: 'form-label' , for: 'floatingInput' %>
+            </div>
+            <div class="form-floating mb-3">
+              <%= f.text_field :email, class: 'form-control' , id: 'floatingInput' %>
+                <%= f.label :email, class: 'form-label' , for: 'floatingInput' %>
+            </div>
+            <div class="form-floating mb-3">
+              <%= f.text_field :password, class: 'form-control' , id: 'floatingInput' %>
+                <%= f.label :password, class: 'form-label' , for: 'floatingInput' %>
+            </div>
+            <div class="form-floating mb-3">
+              <%= f.text_field :bio, class: 'form-control' , id: 'floatingInput' %>
+                <%= f.label :bio, class: 'form-label' , for: 'floatingInput' %>
+            </div>
+            <div class="form-floating mb-3">
+              <%= f.text_field :location, class: 'form-control' , id: 'floatingInput' %>
+                <%= f.label :location, class: 'form-label' , for: 'floatingInput' %>
+            </div>
+            <div class="form-floating mb-3">
+              <%= f.text_field :website, class: 'form-control' , id: 'floatingInput' %>
+                <%= f.label :website, class: 'form-label' , for: 'floatingInput' %>
+            </div>
+            <div class="d-flex justify-content-end">
+              <%= f.submit 'update' , class:'btn btn-primary text-white rounded-pill' %>
+            </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

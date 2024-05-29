@@ -1,0 +1,21 @@
+<div class="container my-5">
+  <div class="col-md-6 mx-auto">
+    <h1>Set your username</h1>
+    <%= form_with model: current_user, url: username_path(current_user) do |f| %>
+      <div class="mb-3">
+        <%= f.label :username, class:'form-label' %><br />
+        <%= f.text_field :username, class:'form-control' %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :name, class:'form-label' %><br />
+        <%= f.text_field :name, class:'form-control' %>
+      </div>
+      <div class="mb-3">
+        <%= f.label '上傳頭貼', class:'form-label' %><br />
+        <%= f.file_field :avatar, class:'form-control my-3' %>
+        <%= cover_image(current_user) %>
+      </div>
+      <%= f.submit "Set User Info", class:'btn btn-primary text-white'%>
+    <% end %>
+  </div>
+</div>

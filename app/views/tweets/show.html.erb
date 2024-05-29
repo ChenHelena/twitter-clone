@@ -1,0 +1,50 @@
+<div class="col-md-6">
+  <div class="my-3">
+    <%= link_to :back, class:'fw-semibold text-black text-decoration-none fs-4' do %>
+      <i class="fa-solid fa-arrow-left me-3"></i>
+      <span>Tweet</span>
+    <% end %>
+  </div>
+  <div data-tweet-path="<%= tweet_path(@tweet_presenter.tweet)%>"
+    class="py-3 px-2 d-flex">
+    <div class="flex-shrink-0">
+      <%= link_to user_path(@tweet_presenter.user) do %>
+        <% if @tweet_presenter.user.avatar.present? %>
+          <%= avatar(@tweet_presenter.user, size: { x: 48, y: 48 }) %>
+        <% else %>
+          <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="flex-grow-1 ms-3 tweet-action">
+      <% if defined?(@tweet_presenter) %>
+        <span class="fw-semibol text-dark">
+          <%= @tweet_presenter.name %>
+        </span>
+        <br>
+        <span class="text-black-50">
+          @<%= @tweet_presenter.username %>
+        </span>
+        <p class="text-dark fs-4 my-2" style="cursor:pointer">
+          <%= @tweet_presenter.body_html.html_safe  %>
+        </p>
+        <p class="text-black-50" style="font-size:0.9em;"><%= @tweet_presenter.tweet.created_at.in_time_zone('Taipei').strftime("%l:%M %p · %b %e, %C%y") %></p>
+        <%= render partial: "tweets/show_status", locals: { tweet_presenter: @tweet_presenter } %>
+      <% end %>
+    </div>
+  </div>
+  <%= render 'shared/tweet_form',form_submit_path: tweet_reply_tweets_path(@tweet_presenter.tweet),  button_label:'Reply' %>
+  
+  <%= turbo_frame_tag "reply_tweets" do %>
+    <%= render partial:'tweets/tweet', collection: @reply_tweets_in_presenter, as: :tweet_presenter %>
+  <% end %>
+</div>
+<div class="col">
+  One of three columns
+</div>
+
+
+
+
+
+

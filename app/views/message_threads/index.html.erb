@@ -1,0 +1,51 @@
+
+<div class="col" data-controller="messages">
+  <div class="my-3 mb-4">
+    <%= link_to :back, class:'fw-semibold text-black text-decoration-none fs-4' do %>
+      <i class="fa-solid fa-arrow-left me-3"></i>
+      <span>Messages</span>
+    <% end %>
+  </div>
+  
+  <% @message_threads.each do |message_thread| %>
+    <% if message_thread.new_record? %>
+      <% other_user = @user %>
+    <% else %>
+      <% other_user = message_thread.users.where.not(id: current_user.id).first %>
+    <% end %>
+  
+    <% if other_user.present? %>
+      <div data-messages-target="messageThread" 
+      data-message-thread-id="<%= message_thread.id %>" 
+      data-messages-target-user-id="<%= other_user.id %>" 
+      class="message-thread py-3 px-2 d-flex <%= 'active' if message_thread.new_record? %>">
+        <div class="flex-shrink-0">
+          <% if other_user.avatar.attached? %>
+            <%= avatar(other_user, size: { x: 48, y: 48 }) %>
+          <% else %>
+            <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+          <% end %>
+        </div>
+        <div class="flex-grow-1 ms-3 align-items-center d-flex">
+          <span class="fw-semibol text-dark">
+            <%= other_user.name %>&nbsp;
+          </span>
+          <span class="text-black-50">
+            @<%= other_user.username %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  
+</div>
+<div class="col-md-6"> 
+  <div class="container flex-column d-flex justify-content-between mt-4" style="height: 100vh;">
+    <div class="content" style="overflow-y:scroll;position:relative;height: 100vh;">
+      <%= render "messages", messages: @messages %>
+    </div>
+    <div class="mb-4 w-100">
+      <%= render "messages/form", user: @user %>
+    </div>
+  </div>
+</div>

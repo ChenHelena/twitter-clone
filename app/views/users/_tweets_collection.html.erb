@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "tweets-collection" do %>
+  <%= render partial:'tweets/tweet', collection: @tweet_presenters, as: :tweet_presenter %>
+<% end %>

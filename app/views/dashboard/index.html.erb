@@ -1,0 +1,27 @@
+<div 
+  class="col-md-6"
+  id="load-more"
+  data-controller="load-more tweet-polling"
+  data-latest-tweet-id="<%= @tweet_activities_data[:tweet_activities].first&.id %>"
+  data-next-page="<%= @tweet_activities_data[:next_page]%>"
+  data-last-page="<%= @tweet_activities_data[:last_page]%>"
+>
+  <div class="my-3">
+    <%= link_to 'Home', dashboard_path, class:'fw-semibold text-black text-decoration-none fs-4' %>
+  </div>
+
+  <%= turbo_stream_from "tweets" %>
+  <%= turbo_frame_tag "tweet_form" do %>
+    <%= render 'shared/tweet_form',form_submit_path: tweets_path, button_label:'Tweet' %>
+  <% end %>
+
+  <%= turbo_frame_tag "tweets" do %>
+    <%= render 'dashboard/tweets', tweet_activities_data: @tweet_activities_data %>
+  <% end %>
+</div>
+<div class="col">
+  <%= render 'shared/hashtag_sidebar' %>
+</div>
+
+
+

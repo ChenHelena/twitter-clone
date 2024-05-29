@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" turbo="true">
+  <head>
+    <title>twitter-clone</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= favicon_link_tag asset_path('twitter.svg') %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <% if flash.any? %>
+          <%= render 'shared/flashes' %>
+        <% end %>
+        <% if user_signed_in? %>
+          <% if controller_name == 'usernames' %>
+            <%= yield %>
+          <% else %>
+            <%= render 'shared/sidebar' %>
+            <%= yield %>
+          <% end %>
+        <% else %>
+          <%= yield %>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>

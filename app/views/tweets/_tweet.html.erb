@@ -1,0 +1,59 @@
+<%= turbo_frame_tag dom_id(tweet_presenter.tweet) do %>
+  <%= tweet_presenter.tweet_activity_html.html_safe %>
+  <div data-controller="tweet-card" data-tweet-path="<%= tweet_path(tweet_presenter.tweet)%>" class="py-3 px-2 tweet-hover d-flex">
+    <div class="flex-shrink-0">
+      <%= link_to user_path(tweet_presenter.user) do %>
+        <% if tweet_presenter.user.avatar.present? %>
+          <%= avatar(tweet_presenter.user, size: { x: 48, y: 48 }) %>
+        <% else %>
+          <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="flex-grow-1 ms-3 tweet-action">
+      <% if defined?(tweet_presenter) %>
+        <span class="fw-semibol text-dark"><%= tweet_presenter.name %></span>
+        <span class="text-black-50">
+          @<%= tweet_presenter.username %> ·
+          <%= tweet_presenter.formatted_timestamp %>
+        </span>
+        <p class="mb-0 text-secondary"><%= tweet_presenter.body_html.html_safe %></p>
+        <div class="d-flex justify-content-between mt-3">
+          <%= link_to tweet_path(tweet_presenter.tweet), type:'button', data:{ 'ignore-click': 'true' }, class:'text-decoration-none views d-inline-flex align-items-center' do %>
+            <span class="bg-icon-blue rounded-circle p-2 d-inline-flex">
+              <i class="fa-solid fa-chart-simple"></i>
+            </span>  
+            <span><%= tweet_presenter.views_count %></span>
+          <% end %>
+          <%= link_to tweet_path(tweet_presenter.tweet),data: {turbo_frame: "_top" } , type:'button', class:'text-decoration-none
+            replies d-inline-flex align-items-center' do %>
+            <span class="bg-icon-blue rounded-circle p-2 d-inline-flex">
+              <i class="fa-regular fa-comment-dots"></i>
+            </span>
+              <%= tweet_presenter.reply_tweets_count %>
+            <% end %>
+          <%= link_to tweet_presenter.tweet_retweet_url, data:{ 'turbo-method':tweet_presenter.turbo_data_retweet_method,'ignore-click': 'true' }, class:"text-decoration-none retweets d-inline-flex align-items-center #{tweet_presenter.tweet_retweeted_by_current_user ? 'text-green' : ''}" do %>
+          <span class="bg-icon-green rounded-circle p-2  d-inline-flex">
+            <i class="fa-solid fa-retweet"></i>
+          </span>
+            <%= tweet_presenter.retweets_count %>
+          <% end %>
+
+          <%= link_to tweet_presenter.tweet_like_url, data:{  'turbo-method':tweet_presenter.turbo_data_like_method, 'ignore-click':'true' }, class: "text-decoration-none likes d-inline-flex align-items-center #{tweet_presenter.tweet_liked_by_current_user ? ' text-pink' : ''}" do %>
+            <span class="bg-icon-red rounded-circle p-2  d-inline-flex">
+              <i class="<%= tweet_presenter.like_heart_icon %>"></i>
+            </span>
+            <%= tweet_presenter.likes_count %>
+          <% end %>
+
+          <%= link_to tweet_presenter.tweet_bookmark_url, type:'button', data:{ 'turbo-method':tweet_presenter.turbo_data_bookmark_method, 'ignore-click': 'true' }, class:"text-decoration-none bookmark d-inline-flex align-items-center #{tweet_presenter.tweet_bookmarked_by_current_user ? 'text-primary' : ''}" do %>
+          <span class="bg-icon-blue rounded-circle p-2 d-inline-flex">
+            <i class="<%= tweet_presenter.bookmark_icon %>"></i>
+          </span>
+            <span><%= tweet_presenter.bookmark_text %></span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

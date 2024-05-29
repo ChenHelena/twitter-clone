@@ -1,0 +1,63 @@
+<div class="col-md-6">
+  <div class="my-3 mb-4">
+    <%= link_to 'Notification' , notifications_path, class:'fw-semibold text-black text-decoration-none fs-4' %>
+  </div>
+
+    <% @notifications.each do |notification| %>
+      <% if notification.followed_me? %>
+        <%= turbo_frame_tag dom_id(notification) do %>
+          <div class="p-3 notification">
+            <div class="d-flex justify-content-between">
+              <% if notification.actor.avatar.present? %>
+                <%= avatar(notification.actor, size: { x: 48, y: 48 }) %>
+              <% else %>
+                <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+              <% end %>
+            <%= link_to "", notification_path(notification), class:"btn-close", data: {"turbo-method": :delete} %>
+            </div>
+            <p><span class="fw-bold">@<%= notification.actor.username %></span>  followed you</p>
+          </div>
+        <% end %>
+      <% elsif notification.liked_tweet? %>
+        <%= turbo_frame_tag dom_id(notification) do %>
+          <div class="p-3 notification">
+            <div class="d-flex justify-content-between">
+              <% if notification.actor.avatar.present? %>
+                <%= avatar(notification.actor, size: { x: 48, y: 48 }) %>
+              <% else %>
+                <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+              <% end %>
+              <%= link_to "" , notification_path(notification), class:"btn-close", data: {"turbo-method": :delete} %>
+            </div>
+            <p class="mb-0"><span class="fw-bold">@<%= notification.actor.username %></span> liked your tweet</p>
+            <span class="text-black-50">
+              <%= truncate(notification.tweet.body, length: 25, omission: '...').html_safe %>
+            </span>
+            <%= link_to "Show all" , tweet_path(notification.tweet), class:"text-primary text-decoration-none" %>
+          </div>
+        <% end %>
+      <% elsif notification.mentioned_me? %>
+        <%= turbo_frame_tag dom_id(notification) do %>
+          <div class="p-3 notification">
+            <div class="d-flex justify-content-between">
+              <% if notification.actor.avatar.present? %>
+                <%= avatar(notification.actor, size: { x: 48, y: 48 }) %>
+              <% else %>
+                <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+              <% end %>
+              <%= link_to "" , notification_path(notification), class:"btn-close", data: {"turbo-method": :delete} %>
+            </div>
+              <p class="mb-0"><span class="fw-bold">@<%= notification.actor.username %></span> mentioned you</p>
+              <span class="text-black-50">
+                <%= truncate(notification.tweet.body, length: 25, omission: '...' ).html_safe %>
+              </span>
+              <%= link_to "Show all" , tweet_path(notification.tweet), class:"text-primary text-decoration-none" %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+
+</div>
+<div class="col">
+  <%= render 'shared/hashtag_sidebar' %>
+</div>

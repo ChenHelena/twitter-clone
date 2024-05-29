@@ -1,0 +1,12 @@
+<div class="d-flex <%= 'flex-row-reverse' if message.user == current_user %>">
+  <div>
+    <div  class="d-flex <%= 'flex-row-reverse' if message.user == current_user %> mb-1 text-black-50">
+      <p class="badge <%= 'text-bg-dark' if message.user == current_user %> text-bg-light fw-normal py-2 px-3 fs-6 mb-0">
+        <%= message.body %>
+      </p>
+    </div>
+    <div class="d-flex <%= 'flex-row-reverse' if message.user == current_user %> mb-1 text-black-50" style="font-size: 11px;">
+      <%= message.formatted_timestamp %>
+    </div>
+  </div>
+</div>

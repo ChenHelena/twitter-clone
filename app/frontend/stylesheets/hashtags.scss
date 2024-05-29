@@ -1,0 +1,19 @@
+.hashtag-hover {
+  &:hover {
+    background: $gray-100;
+    cursor: pointer;
+  }
+}
+
+.hashtag-sidebar{
+  background: $gray-100;
+  
+  .item:hover{
+    background: $gray-200;
+    cursor: pointer;
+  }
+  .showmore:hover{
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+  }
+}

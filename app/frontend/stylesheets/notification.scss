@@ -1,0 +1,10 @@
+.notification{
+  &:hover {
+    cursor: pointer;
+    background: $gray-100;
+  }
+
+  &.active {
+    background: $gray-100;
+  }
+}

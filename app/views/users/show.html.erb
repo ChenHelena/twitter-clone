@@ -1,0 +1,25 @@
+<div class="col-md-6">
+  <div class="my-3">
+    <%= link_to :back, class:'fw-semibold text-black text-decoration-none fs-4 d-flex align-items-center' do %>
+      <i class="fa-solid fa-arrow-left me-3"></i>
+      <div class="d-block">
+        <span>
+          <%= current_user.name %>
+        </span>
+        <span class="fs-6 text-black-50 d-flex">
+          <%= current_user.tweets.size %> posts
+        </span>
+      </div>
+      <% end %>
+  </div>
+  
+  <%= render "users/profile_section", user: @user %>
+  <%= render "users/tweets_collection", tweet_presenters: @tweet_presenters %>
+
+</div>
+<div class="col">
+  <%= render 'shared/hashtag_sidebar' %>
+</div>
+
+
+

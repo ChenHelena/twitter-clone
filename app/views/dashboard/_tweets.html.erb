@@ -1,0 +1,10 @@
+<%= render partial:'tweets/tweet', collection: tweet_activities_data[:tweet_activities], as: :tweet_presenter %>
+
+<script>
+
+
+document.getElementById('load-more').dataset.nextPage = '<%= tweet_activities_data[:next_page]%>'
+document.getElementById('load-more').dataset.lastPage = '<%= tweet_activities_data[:last_page]%>'
+console.log('nextPage:', document.getElementById('load-more').dataset.nextPage)
+console.log('lastPage:', document.getElementById('load-more').dataset.lastPage)
+</script>

@@ -1,0 +1,12 @@
+<div class="col-md-6">
+  <div class="my-3">
+    <%= link_to :back, class:'fw-semibold text-black text-decoration-none fs-4' do %>
+      <i class="fa-solid fa-arrow-left me-3"></i>
+      <span><%= @hashtag.tag %></span>
+    <% end %>
+  </div>
+  <%= render partial:'tweets/tweet', collection: @tweet_presenters, as: :tweet_presenter %>
+</div>
+<div class="col">
+  One of three columns
+</div>

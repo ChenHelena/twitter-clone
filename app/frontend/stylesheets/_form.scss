@@ -1,0 +1,8 @@
+.tweet-input{
+  border: 0;
+
+  &:focus{
+    border-color: transparent;
+    box-shadow: none;
+  }
+}

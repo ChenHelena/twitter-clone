@@ -1,0 +1,20 @@
+<div class="py-3 px-2 d-flex">
+  <div class="flex-shrink-0">
+    <% if current_user.avatar.present? %>
+        <%= avatar(current_user, size: { x: 48, y: 48 }) %>
+    <% else %>
+      <%= image_tag 'user.jpeg' , class: 'rounded-circle' , size: '48x48' , alt: 'Default' %>
+    <% end %>
+  </div>
+  <div class="flex-grow-1 ms-3 tweet-action">
+    <%= form_with model: Tweet.new, url: form_submit_path, data: { controller: 'tweet' } do |f| %>
+      <div class="form-floating">
+        <%= f.text_area :body, class:'form-control tweet-input fs-5', placeholder:"What's happening?!", id: 'floatingTextarea' %>
+          <label for="floatingTextarea">What's happening?!</label>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <%= f.submit button_label , class:'btn btn-primary text-white rounded-pill' %>
+      </div>
+      <% end %>
+  </div>
+</div>

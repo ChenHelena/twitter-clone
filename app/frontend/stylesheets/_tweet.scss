@@ -1,0 +1,44 @@
+.tweet-hover {
+  &:hover {
+    background: $gray-100;
+    cursor: pointer;
+  }
+}
+
+.tweet-action {
+  .views, .replies, .retweets, .likes, .bookmark {
+    font-size: 0.9rem;
+    color: $secondary;
+    &:hover {
+      color: $primary;
+      .bg-icon-blue {
+        background: $blue-100;
+      }
+      .rounded-circle{
+        padding: 0.5rem;
+      }
+    }
+  }
+  .likes{
+    &:hover{
+      color: $pink;
+      .bg-icon-red {
+        background: $red-100;
+      }
+    }
+  }
+
+  .retweets{
+    &:hover{
+      color: rgb(0, 186, 124);
+      .bg-icon-green {
+        background: $green-100;
+      }
+    }
+  }
+  
+}
+
+.tooltip-inner{
+  font-size: 0.6rem !important;
+}

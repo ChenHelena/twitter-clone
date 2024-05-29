@@ -1,0 +1,3 @@
+<%= turbo_stream.append "tweets" do %>
+  <%= render partial: "dashboard/tweets", locals: { tweet_activities_data: @tweet_activities_data } %>
+<% end %>

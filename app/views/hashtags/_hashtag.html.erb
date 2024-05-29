@@ -1,0 +1,6 @@
+<% if hashtag.tweets.size > 0 %>
+  <div class="hashtag-hover p-3" data-controller="hashtag" data-hashtag-path="<%= hashtag_path(hashtag) %>" >
+    <p class="fw-bold mb-0">#<%= hashtag.tag %></p>
+    <p class="text-secondary mb-0"><%= hashtag.tweets.size %> Tweets</p>
+  </div>
+<% end %>

@@ -1,0 +1,65 @@
+<div class="col flex-column d-flex justify-content-between" style="height: 100vh;">
+  <nav class="navbar">
+    <div class="container-fluid">
+      <%= link_to dashboard_path, class:'navbar-brand rounded-circle mx-2 px-2 py-3' do %>
+        <i class="fa-brands fa-twitter mx-3 text-primary fs-4"></i>
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= link_to dashboard_path, class:"navbar-brand rounded-pill px-3 py-2 mb-2 #{nav_link_active?('dashboard')}" do %>
+        <i class="bi <%= controller_name == 'dashboard' ? 'bi-house-door-fill' : 'bi-house' %> mx-3"></i> 
+        Home
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= link_to hashtags_path, class:"navbar-brand rounded-pill px-3 py-2 mb-2 #{nav_link_active?('hashtags')}" do %>
+        <i class="bi <%= controller_name == 'hashtags' ? 'bi-search-heart' : 'bi-search' %> mx-3"></i>
+        Explore
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= link_to notifications_path, class:"navbar-brand rounded-pill px-3 py-2 mb-2 #{nav_link_active?('notifications')}" do %>
+        <i class="<%= controller_name == 'notificatons' ? 'fa-solid' : 'fa-regular' %> fa-bell mx-3"></i>
+        Notifications
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= link_to message_threads_path, class:"navbar-brand rounded-pill px-3 py-2 mb-2 #{nav_link_active?('message_threads')}" do %>
+        <i class="bi <%= controller_name == 'message_threads' ? 'bi-chat-left-fill' : 'bi-chat-left-dots' %> mx-3"></i>
+        Messages
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= link_to bookmarks_path, class:"navbar-brand rounded-pill px-3 py-2 mb-2 #{nav_link_active?('bookmarks')}" do %>
+        <i class="<%= controller_name == 'bookmarks' ? 'fas' : 'far' %> fa-bookmark mx-3"></i>
+        Bookmarks
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= link_to profile_path, class:"navbar-brand rounded-pill px-3 py-2 mb-2 #{nav_link_active?('profile')}" do %>
+        <i class="<%= controller_name == 'profile' ? 'fas' : 'far' %> fa-user mx-3"></i>
+        Profile
+      <% end %>
+    </div>
+    <div class="container-fluid">
+      <%= button_tag 'Tweet', class:'btn btn-primary text-white rounded-pill mx-3 my-2 w-75', data:{ "bs-toggle": "modal", "bs-target":"#dashboardModal" } %>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <%= button_to 'log out' , destroy_user_session_path, method: :delete, data: {turbo: false}, class:'btn btn-outline-primary mx-3 my-2' %>
+  </div>
+</div>
+
+<!-- Tweet Form Modal -->
+<div class="modal" id="dashboardModal" tabindex="-1" aria-labelledby="dashboardModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="btn-close mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render 'shared/tweet_form',form_submit_path: tweets_path,  button_label:'Tweet' %>
+      </div>
+    </div>
+  </div>
+</div>
